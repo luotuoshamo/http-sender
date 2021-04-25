@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>http-sender</title>
+</head>
+<body>
+<button id="sendbtn">send</button>
+<h1>textParam</h1>
+<button id="addRow1Btn">addRow</button>
+<table id="textParamTable">
+    <tr>
+        <td>key</td>
+        <td>value</td>
+    </tr>
+    <tr>
+        <td><input></td>
+        <td><input></td>
+    </tr>
+    <tr>
+        <td><input></td>
+        <td><input></td>
+    </tr>
+    <tr>
+        <td><input></td>
+        <td><input></td>
+    </tr>
+</table>
+
+<h1>binaryParam</h1>
+<button id="addRow2Btn">addRow</button>
+<table id="binaryParamTable">
+    <tr>
+        <td>key</td>
+        <td>value</td>
+    </tr>
+    <tr>
+        <td><input></td>
+        <td><input type="file"></td>
+    </tr>
+    <tr>
+        <td><input></td>
+        <td><input type="file"></td>
+    </tr>
+    <tr>
+        <td><input></td>
+        <td><input type="file"></td>
+    </tr>
+</table>
+</body>
+</html>
+<script src="jsUtil.js"></script>
+<script src="httpUtil.js"></script>
+<script>
+    window.onload = function () {
+        listenAddRow1Btn()
+        listenAddRow2Btn()
+
+    }
+
+    function listenAddRow1Btn() {
+        id("addRow1Btn").addEventListener("click", function () {
+            let tr = document.createElement("tr")
+            let td1 = document.createElement("td")
+            let td2 = document.createElement("td")
+            let input1 = document.createElement("input")
+            let input2 = document.createElement("input")
+
+            td1.append(input1)
+            td2.append(input2)
+
+            tr.append(td1)
+            tr.append(td2)
+
+            id("textParamTable").append(tr)
+        })
+    }
+
+    function listenAddRow2Btn() {
+        id("addRow2Btn").addEventListener("click", function () {
+            let tr = document.createElement("tr")
+            let td1 = document.createElement("td")
+            let td2 = document.createElement("td")
+            let input1 = document.createElement("input")
+            let input2 = document.createElement("input")
+
+            input2.type = 'file'
+
+            td1.append(input1)
+            td2.append(input2)
+
+            tr.append(td1)
+            tr.append(td2)
+
+            id("binaryParamTable").append(tr)
+        })
+    }
+</script>
