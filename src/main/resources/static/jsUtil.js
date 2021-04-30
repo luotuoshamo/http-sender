@@ -78,3 +78,12 @@ EventUtil.enter = function (tagId, func) {
 function id(id) {
     return document.getElementById(id)
 }
+
+
+function getRadioValue(radioTagName) {
+    let radioTags = document.getElementsByName(radioTagName)
+    for (let i = 0; i < radioTags.length; i++) {
+        let radioTag = radioTags[i]
+        if(radioTag.checked) return radioTag.defaultValue
+    }
+}

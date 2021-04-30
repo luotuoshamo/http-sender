@@ -5,7 +5,34 @@
     <title>http-sender</title>
 </head>
 <body>
-<button id="sendbtn">send</button>
+<table id="settingTable">
+    <tr>
+        <td>url</td>
+        <td><input id="url" style="width: 100%"></td>
+    </tr>
+    <tr>
+        <td>method</td>
+        <td>
+            <input type="radio" name="method" value="get">get
+            <input type="radio" name="method" value="post">post
+        </td>
+    </tr>
+    <tr>
+        <td>bodyType</td>
+        <td>
+            <input type="radio" name="bodyType" value="form-data">form-data
+            <input type="radio" name="bodyType" value="x-www-form-urlencoded">x-www-form-urlencoded
+            <input type="radio" name="bodyType" value="json">json
+            <input type="radio" name="bodyType" value="xml">xml
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>
+            <button id="sendBtn">send</button>
+        </td>
+    </tr>
+</table>
 <h1>textParam</h1>
 <button id="addRow1Btn">addRow</button>
 <table id="textParamTable">
@@ -49,12 +76,13 @@
 </table>
 </body>
 </html>
-<script src="jsUtil.js"></script>
-<script src="httpUtil.js"></script>
+<script src="jsUtil.js?version=1.0"></script>
+<script src="httpUtil.js?version=1.0"></script>
 <script>
     window.onload = function () {
         listenAddRow1Btn()
         listenAddRow2Btn()
+        listenSendBtn()
 
     }
 
@@ -95,4 +123,51 @@
             id("binaryParamTable").append(tr)
         })
     }
+
+    function listenSendBtn() {
+        id("sendBtn").addEventListener("click", function () {
+            let url = id("url").getValue
+            let method = getRadioValue("method")
+            let bodyType = getRadioValue("bodyType")
+            getTextParam()
+            getBinaryParam()
+            // 获取参数-二进制参数
+        })
+    }
+
+    /**
+     * 获取文本参数
+     */
+    function getTextParam() {
+        let textParamObj = {}
+        let textParamTable = id("textParamTable")
+        let trList = textParamTable.getElementsByTagName("tr")
+        for (let i = 1; i < trList.length; i++) {
+            let tr = trList[i]
+            let inputList = tr.getElementsByTagName("input")
+            let key = inputList[0].value
+            let value = inputList[1].value
+            if (!StringUtil.isBlank(key)) {
+                textParamObj[key] = value
+            }
+        }
+        return textParamObj
+    }
+
+    function getBinaryParam() {
+        let binaryParamObj = {}
+        let textParamTable = id("binaryParamTable")
+        let trList = textParamTable.getElementsByTagName("tr")
+        for (let i = 1; i < trList.length; i++) {
+            let tr = trList[i]
+            let key = tr.getElementsByTagName("input")[0].value
+            let file = tr.getElementsByTagName("file")[0]
+            console.log(file)
+            // if (!StringUtil.isBlank(key)) {
+            //     binaryParamObj[key] = value
+            // }
+        }
+        return binaryParamObj
+    }
+
 </script>
