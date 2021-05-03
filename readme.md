@@ -7,7 +7,7 @@
 
 * 仅支持发标准的HTTP请求：get请求不带request body，post请求不带query string
 
-# 使用
+# 使用 
 
 * 设置浏览器允许跨域
 
