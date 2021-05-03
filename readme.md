@@ -13,17 +13,17 @@
 
   1. 
 
-  ![image-20210503170044253](D:\code\IdeaProjects\http-sender\readme.assets\image-20210503170044253.png)
+  ![image-20210503170044253](readme.assets\image-20210503170044253.png)
 
   在**目标**的值后面加上  --disable-web-security --user-data-dir=D:\appData\chrome
 
   > dir：自定义一个存在的文件夹即可
 
-  ![image-20210503170242591](D:\code\IdeaProjects\http-sender\readme.assets\image-20210503170242591.png)
+  ![image-20210503170242591](readme.assets\image-20210503170242591.png)
 
 2. 
 
-![image-20210503170727827](D:\code\IdeaProjects\http-sender\readme.assets\image-20210503170727827.png)
+![image-20210503170727827](readme.assets\image-20210503170727827.png)
 
 > chrome://flags
 >
@@ -31,8 +31,8 @@
 
 3. 发请求
 
-   ![image-20210503171248325](D:\code\IdeaProjects\http-sender\readme.assets\image-20210503171248325.png)
+   ![image-20210503171248325](readme.assets\image-20210503171248325.png)
 
-  ![image-20210503171555422](D:\code\IdeaProjects\http-sender\readme.assets\image-20210503171555422.png)
+  ![image-20210503171555422](readme.assets\image-20210503171555422.png)
 
-![image-20210503171725188](D:\code\IdeaProjects\http-sender\readme.assets\image-20210503171725188.png)
+![image-20210503171725188](readme.assets\image-20210503171725188.png)
