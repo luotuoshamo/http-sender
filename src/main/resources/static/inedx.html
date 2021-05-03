@@ -184,7 +184,7 @@
                     res = HttpSender.postFormData(url, headObj, textParamObj, binaryParamObj)
                     break
                 case "x-www-form-urlencoded":
-                    res = HttpSender.postFormData(url, headObj, textParamObj)
+                    res = HttpSender.postFormUrlEncoded(url, headObj, textParamObj)
                     break
                 case "json":
                     res = HttpSender.postJson(url, headObj, row)

@@ -155,10 +155,7 @@
      * 判断字符串是否为空
      */
     StringUtil.isBlank = function (s) {
-        if (!s) return true
-        console.log("ia", typeof s, s)
-        s = s.replace(" ", "")
-        return s == ""
+        return !s || s.trim() == ""
     }
     ////////////////////////////////////////////////
     /**
@@ -399,6 +396,7 @@
     }
 </script>
 
+
 <script>
     /**
      * table中增加一行
@@ -481,7 +479,7 @@
                     res = HttpSender.postFormData(url, headObj, textParamObj, binaryParamObj)
                     break
                 case "x-www-form-urlencoded":
-                    res = HttpSender.postFormData(url, headObj, textParamObj)
+                    res = HttpSender.postFormUrlEncoded(url, headObj, textParamObj)
                     break
                 case "json":
                     res = HttpSender.postJson(url, headObj, row)
