@@ -13,12 +13,12 @@
     <tr>
         <td>method</td>
         <td>
-            <input type="radio" name="method" value="get">get
+            <input type="radio" name="method" value="get" checked>get
             <input type="radio" name="method" value="post">post
         </td>
     </tr>
     <tr>
-        <td>bodyType</td>
+        <td>bodyType/mimeType</td>
         <td>
             <input type="radio" name="bodyType" value="form-data">form-data
             <input type="radio" name="bodyType" value="x-www-form-urlencoded">x-www-form-urlencoded
@@ -27,14 +27,41 @@
         </td>
     </tr>
     <tr>
-        <td></td>
-        <td>
-            <button id="sendBtn">send</button>
+        <td colspan="2">
+            <button id="sendBtn"
+                    onclick="sendBtnClick()"
+                    style="width: 100%;height:40px;font-size: 20px;background-color:forestgreen;">
+                send
+            </button>
         </td>
     </tr>
 </table>
+<hr>
+<!--响应-->
+<div>
+    <h1>response</h1>
+    <textarea id="resTextarea" rows="10" cols="140"></textarea>
+</div>
+<hr>
+<h1>head</h1>
+<button onclick="addRowBtnClick('headTable',false)">addRow</button>
+<table id="headTable">
+    <tr>
+        <td>key</td>
+        <td>value</td>
+    </tr>
+    <tr>
+        <td><input></td>
+        <td><input></td>
+    </tr>
+    <tr>
+        <td><input></td>
+        <td><input></td>
+    </tr>
+</table>
+<hr>
 <h1>textParam</h1>
-<button id="addRow1Btn">addRow</button>
+<button onclick="addRowBtnClick('textParamTable', false)">addRow</button>
 <table id="textParamTable">
     <tr>
         <td>key</td>
@@ -48,126 +75,125 @@
         <td><input></td>
         <td><input></td>
     </tr>
-    <tr>
-        <td><input></td>
-        <td><input></td>
-    </tr>
 </table>
-
+<hr>
 <h1>binaryParam</h1>
-<button id="addRow2Btn">addRow</button>
+<button onclick="addRowBtnClick('binaryParamTable', true)">addRow</button>
 <table id="binaryParamTable">
     <tr>
         <td>key</td>
         <td>value</td>
     </tr>
     <tr>
-        <td><input></td>
+        <td><input value="file1"></td>
         <td><input type="file"></td>
     </tr>
     <tr>
-        <td><input></td>
-        <td><input type="file"></td>
-    </tr>
-    <tr>
-        <td><input></td>
+        <td><input value="file2"></td>
         <td><input type="file"></td>
     </tr>
 </table>
+<hr>
+<div>
+    <h1>rowParam</h1>
+    <textarea id="rowTextArea" rows="10" cols="140"></textarea>
+</div>
 </body>
 </html>
 <script src="jsUtil.js?version=1.0"></script>
-<script src="httpUtil.js?version=1.0"></script>
+<script src="httpSender.js?version=1.0"></script>
 <script>
-    window.onload = function () {
-        listenAddRow1Btn()
-        listenAddRow2Btn()
-        listenSendBtn()
+    /**
+     * table中增加一行
+     */
+    function addRowBtnClick(tableId, isFile) {
+        let tr = document.createElement("tr")
+        let td1 = document.createElement("td")
+        let td2 = document.createElement("td")
+        let input1 = document.createElement("input")
+        let input2 = document.createElement("input")
+        if (isFile) input2.type = "file"
 
+        td1.append(input1)
+        td2.append(input2)
+
+        tr.append(td1)
+        tr.append(td2)
+
+        id(tableId).append(tr)
     }
 
-    function listenAddRow1Btn() {
-        id("addRow1Btn").addEventListener("click", function () {
-            let tr = document.createElement("tr")
-            let td1 = document.createElement("td")
-            let td2 = document.createElement("td")
-            let input1 = document.createElement("input")
-            let input2 = document.createElement("input")
 
-            td1.append(input1)
-            td2.append(input2)
+    /**
+     * 点击发送请求按钮
+     */
+    function sendBtnClick() {
+        let url = id("url").value
+        let method = getRadioValue("method")
+        let bodyType = getRadioValue("bodyType")
+        let headObj = getTableValue("headTable", false)
+        let textParamObj = getTableValue("textParamTable", false)
+        let binaryParamObj = getTableValue("binaryParamTable", true)
+        let row = id("rowTextArea").value
 
-            tr.append(td1)
-            tr.append(td2)
-
-            id("textParamTable").append(tr)
-        })
-    }
-
-    function listenAddRow2Btn() {
-        id("addRow2Btn").addEventListener("click", function () {
-            let tr = document.createElement("tr")
-            let td1 = document.createElement("td")
-            let td2 = document.createElement("td")
-            let input1 = document.createElement("input")
-            let input2 = document.createElement("input")
-
-            input2.type = 'file'
-
-            td1.append(input1)
-            td2.append(input2)
-
-            tr.append(td1)
-            tr.append(td2)
-
-            id("binaryParamTable").append(tr)
-        })
-    }
-
-    function listenSendBtn() {
-        id("sendBtn").addEventListener("click", function () {
-            let url = id("url").getValue
-            let method = getRadioValue("method")
-            let bodyType = getRadioValue("bodyType")
-            getTextParam()
-            getBinaryParam()
-            // 获取参数-二进制参数
-        })
+        // 校验输入
+        if (StringUtil.isBlank(url)) {
+            alert("url不可为空")
+            return
+        }
+        if (StringUtil.isBlank(method)) {
+            alert("method不可为空")
+            return
+        }
+        if (method != "get" && StringUtil.isBlank(bodyType)) {
+            alert("bodyType不可为空")
+            return
+        }
+        sendHttpRequest(url, method, bodyType, headObj, textParamObj, binaryParamObj, row)
     }
 
     /**
-     * 获取文本参数
+     * 获取table中输入的值
+     * headTable，textParamTable, binaryParamTable
      */
-    function getTextParam() {
-        let textParamObj = {}
-        let textParamTable = id("textParamTable")
-        let trList = textParamTable.getElementsByTagName("tr")
-        for (let i = 1; i < trList.length; i++) {
-            let tr = trList[i]
-            let inputList = tr.getElementsByTagName("input")
-            let key = inputList[0].value
-            let value = inputList[1].value
-            if (!StringUtil.isBlank(key)) {
-                textParamObj[key] = value
-            }
-        }
-        return textParamObj
-    }
-
-    function getBinaryParam() {
-        let binaryParamObj = {}
-        let textParamTable = id("binaryParamTable")
+    function getTableValue(tableId, isFileValue) {
+        let obj = {}
+        let textParamTable = id(tableId)
         let trList = textParamTable.getElementsByTagName("tr")
         for (let i = 1; i < trList.length; i++) {
             let tr = trList[i]
             let key = tr.getElementsByTagName("input")[0].value
-            let file = tr.getElementsByTagName("file")[0]
-            console.log(file)
-            // if (!StringUtil.isBlank(key)) {
-            //     binaryParamObj[key] = value
-            // }
+            let value = isFileValue ? tr.getElementsByTagName("input")[1].files[0]
+                : tr.getElementsByTagName("input")[1].value
+            if (!StringUtil.isBlank(key)) {
+                obj[key] = value
+            }
         }
-        return binaryParamObj
+        return obj
     }
 
+    /**
+     * 发送http请求
+     */
+    function sendHttpRequest(url, method, bodyType, headObj, textParamObj, binaryParamObj, row) {
+        let res = null
+        if (method == "get") res = HttpSender.get(url, headObj, textParamObj)
+        if (method == "post") {
+            switch (bodyType) {
+                case "form-data":
+                    res = HttpSender.postFormData(url, headObj, textParamObj, binaryParamObj)
+                    break
+                case "x-www-form-urlencoded":
+                    res = HttpSender.postFormData(url, headObj, textParamObj)
+                    break
+                case "json":
+                    res = HttpSender.postJson(url, headObj, row)
+                    break
+                case "xml":
+                    res = HttpSender.postXml(url, headObj, row)
+                    break
+            }
+        }
+        id("resTextarea").value = res ? JSON.stringify(res) : "fail"
+    }
 </script>

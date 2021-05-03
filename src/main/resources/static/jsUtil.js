@@ -50,9 +50,7 @@ let StringUtil = new Object()
  * ÅÐ¶Ï×Ö·û´®ÊÇ·ñÎª¿Õ
  */
 StringUtil.isBlank = function (s) {
-    if (!s) return true
-    if (!s.trim()) return true
-    return false
+    return !s || s.trim() == ""
 }
 ////////////////////////////////////////////////
 /**
@@ -84,6 +82,6 @@ function getRadioValue(radioTagName) {
     let radioTags = document.getElementsByName(radioTagName)
     for (let i = 0; i < radioTags.length; i++) {
         let radioTag = radioTags[i]
-        if(radioTag.checked) return radioTag.defaultValue
+        if (radioTag.checked) return radioTag.defaultValue
     }
 }
