@@ -3,6 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>http-sender</title>
+    <style>
+        .valueInput {
+            width: 200%;
+        }
+
+        .addRowBtn {
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
 <table id="settingTable">
@@ -30,7 +39,7 @@
         <td colspan="2">
             <button id="sendBtn"
                     onclick="sendBtnClick()"
-                    style="width: 100%;height:40px;font-size: 20px;background-color:forestgreen;">
+                    style="width: 100%;height:40px;font-size: 20px;background-color:forestgreen;cursor: pointer">
                 send
             </button>
         </td>
@@ -44,7 +53,7 @@
 </div>
 <hr>
 <h1>head</h1>
-<button onclick="addRowBtnClick('headTable',false)">addRow</button>
+<button class="addRowBtn" onclick="addRowBtnClick('headTable',false)">addRow</button>
 <table id="headTable">
     <tr>
         <td>key</td>
@@ -52,16 +61,16 @@
     </tr>
     <tr>
         <td><input></td>
-        <td><input></td>
+        <td><input class="valueInput"></td>
     </tr>
     <tr>
         <td><input></td>
-        <td><input></td>
+        <td><input class="valueInput"></td>
     </tr>
 </table>
 <hr>
 <h1>textParam</h1>
-<button onclick="addRowBtnClick('textParamTable', false)">addRow</button>
+<button class="addRowBtn" onclick="addRowBtnClick('textParamTable', false)">addRow</button>
 <table id="textParamTable">
     <tr>
         <td>key</td>
@@ -69,16 +78,16 @@
     </tr>
     <tr>
         <td><input></td>
-        <td><input></td>
+        <td><input class="valueInput"></td>
     </tr>
     <tr>
         <td><input></td>
-        <td><input></td>
+        <td><input class="valueInput"></td>
     </tr>
 </table>
 <hr>
 <h1>binaryParam</h1>
-<button onclick="addRowBtnClick('binaryParamTable', true)">addRow</button>
+<button class="addRowBtn" onclick="addRowBtnClick('binaryParamTable', true)">addRow</button>
 <table id="binaryParamTable">
     <tr>
         <td>key</td>
@@ -113,6 +122,7 @@
         let input1 = document.createElement("input")
         let input2 = document.createElement("input")
         if (isFile) input2.type = "file"
+        if (!isFile) input2.className = "valueInput"
 
         td1.append(input1)
         td2.append(input2)
