@@ -11,7 +11,7 @@
 
 * 设置浏览器允许跨域
 
-  1. 
+1. 
 
   ![image-20210503170044253](readme.assets\image-20210503170044253.png)
 
@@ -21,15 +21,12 @@
 
   ![image-20210503170242591](readme.assets\image-20210503170242591.png)
 
-2. 
+2.  谷歌浏览器地址栏访问：chrome://flags，然后搜索：SameSite by default cookies，将送到的两项都设置成Disable
+
 
 ![image-20210503170727827](readme.assets\image-20210503170727827.png)
 
-> chrome://flags
->
-> SameSite by default cookies
-
-3. 发请求
+* 发请求
 
    ![image-20210503171248325](readme.assets\image-20210503171248325.png)
 
